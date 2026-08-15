@@ -1,26 +1,32 @@
 # mayusculas 65-90
 # 97-122
-def calculate_cipher_value(assci_value, number,min)
-    assci_value -= number
-    assci_value += 26 if number < min
-    assci_value
-end
 def caesar_cipher(string, number = 0)
+    unless number.is_a?(Integer)
+      return "solo puede usar numeros enteros"
+    end
     response = ""
-    number = number % 26 if number > 26
+    if number >= 0
+        number = number % 26 if number > 26
+    else
+        number = (number.abs % 26) * -1 if number.abs > 26
+    end
     string.each_char do |char|
         assci = char.ord
-        new_value = nil
-        if assci.between?(65, 90) 
-        new_value = assci - number
-        new_value += 26 if new_value < 65
+        min = nil
+        if assci.between?(65, 90)
+            min = 65
         elsif assci.between?(97, 122) 
-        new_value = assci - number
-        new_value += 26 if new_value < 97
+            min = 97
+        else
+            response.concat(assci.chr)
+            next
         end
-        response.concat(new_value.chr)
+        assci -= number
+        assci += 26 if assci < min
+        assci -= 26 if assci > min + 25 && number < 0
+        response.concat(assci.chr)
     end
     return response
 end
 
-p caesar_cipher("hola", 0)
+p caesar_cipher("x", -3)
