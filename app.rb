@@ -21,12 +21,10 @@ def caesar_cipher(string, number = 0)
             response.concat(assci.chr)
             next
         end
-        assci -= number
-        assci += 26 if assci < min
-        assci -= 26 if assci > min + 25 && number < 0
+        assci += number
+        assci -= 26 if assci > min + 25
+        assci += 26 if assci < min && number < 0
         response.concat(assci.chr)
     end
     return response
 end
-
-p caesar_cipher("x", -3)
